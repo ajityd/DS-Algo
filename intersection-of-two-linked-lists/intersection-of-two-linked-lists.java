@@ -10,49 +10,25 @@
  * }
  */
 public class Solution {
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        ListNode nodeA = headA;
-        ListNode nodeB = headB;
-        int count1 = 0;
-        int count2 = 0;
-        while(nodeA != null){
-            count1++;
-            nodeA = nodeA.next;
-        }
-        nodeA = headA;
-        while(nodeB != null){
-            count2++;
-            nodeB = nodeB.next;
-        }
-        nodeB = headB;
-        ListNode res;
-        System.out.println(count1 +" "+count2);
-        if(count1 > count2){
-            while(count1 > count2){
-                nodeA = nodeA.next;
-                count1--;
-            }
-            
-            res = compare(nodeA, nodeB);
-        }
-        else{
-            while(count2 > count1){
-                nodeB = nodeB.next;
-                count2--;
-            }            
-            res = compare(nodeA, nodeB);
-        }
-        return res;
+ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    ///// By Using two pointers
+    // first fix the values for pointers
+    ListNode ptr1= headA, ptr2= headB;
+    if(ptr1== null || ptr2==null) return null;
+    while(ptr1!= ptr2){
+        // move pointers by one place until one list reaches to null
+        ptr1=ptr1.next;
+        ptr2=ptr2.next;
+        // if listA has overlapping intersection of listB then return intersection point.
+        if(ptr1==ptr2) return ptr1;
+        // else reach the end on smaller list and change pointer to head of larger list
+        if(ptr1==null)
+            ptr1= headB;
+        // the bigger list also get transversed and reaches null. Now, change pointer to
+        // head of smaller list.
+        if(ptr2==null)
+            ptr2=headA;
         
-    }
-    
-    public ListNode compare(ListNode lis1, ListNode lis2){
-        while(lis1 != null){
-            if(lis1 == lis2)
-                return lis1;
-            lis1 = lis1.next;
-            lis2 = lis2.next;
-        }
-        return null;
-    }
+    }   return ptr1;
+}
 }
